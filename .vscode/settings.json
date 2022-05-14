@@ -6,6 +6,7 @@
     "supabase",
     "tailwindcss",
     "todos",
+    "TTFB",
     "zustand"
   ]
 }
