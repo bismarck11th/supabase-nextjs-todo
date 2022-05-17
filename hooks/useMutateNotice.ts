@@ -9,15 +9,16 @@ export const useMutateNotice = () => {
 
   const createNoticeMutation = useMutation(
     async (notice: Omit<Notice, 'id' | 'created_at'>) => {
-      const { data, error } = await supabase.from('notice').insert(notice)
+      const { data, error } = await supabase.from('notices').insert(notice)
       if (error) throw new Error(error.message)
       return data
     },
     {
       onSuccess: (res) => {
-        const previousNotices = queryClient.getQueriesData<Notice[]>('notices')
+        const previousNotices = queryClient.getQueryData<Notice[]>('notices')
+        console.log(previousNotices)
         if (previousNotices) {
-          queryClient.setQueriesData('notices', [...previousNotices, res[0]])
+          queryClient.setQueryData('notices', [...previousNotices, res[0]])
         }
         reset()
       },
